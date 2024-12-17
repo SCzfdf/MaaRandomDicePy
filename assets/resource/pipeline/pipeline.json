@@ -1,0 +1,10 @@
+{
+    "$schema": "/deps/tools/pipeline.schema.json",
+    "open_app": {
+        "$schema": "/deps/tools/pipeline.schema.json",
+        "recognition": "OCR",
+        "expected": "Random Dice",
+        "pre_delay": 0,
+        "post_delay": 0
+    }
+}
