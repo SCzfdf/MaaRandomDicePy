@@ -1,10 +1,83 @@
 {
     "$schema": "/deps/tools/pipeline.schema.json",
-    "open_app": {
-        "$schema": "/deps/tools/pipeline.schema.json",
-        "recognition": "OCR",
-        "expected": "Random Dice",
+    "recognition_monster_1": {
+        "recognition": "FeatureMatch",
+        "roi": [3,500,200,750],
+        "template": [
+            "monster_w_1.png",
+            "monster_w_2.png",
+            "monster_w_3.png",
+            "monster_w_4.png",
+            "monster_w_5.png",
+            "monster_w_6.png",
+            "monster_w_7.png",
+            "monster_w_8.png",
+            "monster_w_9.png",
+            "monster_w_10.png",
+            "monster_w_11.png",
+            "monster_1.png",
+            "monster_2.png",
+            "monster_3.png"
+        ],
+        "threshold": [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
         "pre_delay": 0,
-        "post_delay": 0
+        "post_delay": 0,
+        "method": 5,
+        "count": 9,
+        "timeout": 5000,
+        "action": "Custom",
+        "custom_action": "custom_swipe"
+    },
+
+
+    "start": {
+        "next": [
+            "recognition_monster"
+        ],
+        "interrupt": [
+            "recognition_monster2"
+        ]
+    },
+    "recognition_monster": {
+        "recognition": "OCR",
+        "roi": [3,500,100,750],
+        "expected": "^\\d+[a-zA-Z]?$",
+        "pre_delay": 0,
+        "post_delay": 0,
+        "timeout": 5000,
+        "action": "Custom",
+        "custom_action": "custom_swipe"
+    },
+    "recognition_monster2": {
+        "recognition": "OCR",
+        "roi": [100,500,500,100],
+        "expected": "^\\d+[a-zA-Z]?$",
+        "pre_delay": 0,
+        "post_delay": 0,
+        "timeout": 5000,
+        "action": "Custom",
+        "custom_action": "custom_swipe"
+    },
+    "recognition_red_stone": {
+        "recognition": "TemplateMatch",
+        "roi": [110,648,600,450],
+        "template": "red_stone.png",
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 100
+    },
+    "recognition_blue_stone": {
+        "recognition": "TemplateMatch",
+        "roi": [110,648,600,450],
+        "template": [
+            "blue_stone_4.png",
+            "blue_stone_3.png",
+            "blue_stone_2.png",
+            "blue_stone_1.png"
+        ],
+        "pre_delay": 0,
+        "post_delay": 0,
+        "method": 5,
+        "count": 16
     }
 }

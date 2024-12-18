@@ -1,14 +1,17 @@
 import os
+from datetime import datetime
 
-from deps.binding.Python.maa.controller import AdbController
-from deps.binding.Python.maa.resource import Resource
-from deps.binding.Python.maa.tasker import Tasker
-from deps.binding.Python.maa.toolkit import Toolkit
-from src.recognition.app_recognition import AppRecognition
+from maa.controller import AdbController
+from maa.resource import Resource
+from maa.tasker import Tasker
+from maa.toolkit import Toolkit
+
+from src.action.custom_swipe import CustomSwipe
 
 
 def main():
     current_dir = os.getcwd()
+    print(f'current_dir:{current_dir}')
     resource_path = os.path.join(current_dir, "assets", "resource")
 
     Toolkit.init_option(os.path.join(current_dir, "assets"))
@@ -16,7 +19,7 @@ def main():
     # 资源
     resource = Resource()
     resource.post_path(resource_path).wait()
-    resource.register_custom_recognition("AppRecognition", AppRecognition())
+    resource.register_custom_action("custom_swipe", CustomSwipe())
 
     # 模拟器
     controller = get_controller()
@@ -24,8 +27,12 @@ def main():
     # 任务
     task = get_task(resource, get_controller())
 
-    result = task.post_pipeline("pipeline").wait().get()
-    print(f'===========result:{result}')
+    while True:
+        # print(f'-----------start:{datetime.now()}')
+        # result = task.post_pipeline('recognition_monster').wait().get()
+        # result = task.post_pipeline('start').wait().get()
+        task.post_pipeline('recognition_monster').wait()
+        # print(f'===========end:{datetime.now()} result:{result}')
 
     # Toolkit.pi_register_custom_action("MyAct", MyAction())
 
@@ -58,8 +65,6 @@ def get_controller() -> AdbController:
     )
     controller.post_connection().wait()
     return controller
-
-
 
 
 if __name__ == '__main__':

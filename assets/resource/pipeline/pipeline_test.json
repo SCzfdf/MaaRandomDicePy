@@ -1,0 +1,56 @@
+{
+  "$schema": "/deps/tools/pipeline.schema.json",
+  "recognition_monster_test123": {
+    "recognition": "FeatureMatch",
+    "roi": [3,700,200,400],
+    "template": [
+      "monster_w_1.png",
+      "monster_w_2.png",
+      "monster_w_3.png",
+      "monster_w_4.png",
+      "monster_w_5.png",
+      "monster_w_6.png",
+      "monster_w_7.png",
+      "monster_w_8.png",
+      "monster_w_9.png",
+      "monster_w_10.png",
+      "monster_w_11.png",
+      "monster_1.png",
+      "monster_2.png",
+      "monster_3.png"
+    ],
+    "threshold": [0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7],
+    "pre_delay": 0,
+    "timeout": 5000,
+    "post_delay": 0,
+    "method": 5,
+    "count": 9
+  },
+  "recognition_monster_ocr_test": {
+    "recognition": "OCR",
+    "roi": [3,700,100,400],
+    "expected": "^\\d+[a-zA-Z]?$",
+    "pre_delay": 0,
+    "post_delay": 0
+  },
+  "recognition_red_stone_test": {
+    "recognition": "TemplateMatch",
+    "roi": [110,648,600,450],
+    "template": "red_stone.png",
+    "pre_delay": 0,
+    "post_delay": 0,
+    "rate_limit": 100
+  },
+  "recognition_blue_stone_test": {
+    "recognition": "FeatureMatch",
+    "roi": [110,648,600,450],
+    "template": [
+      "blue_stone_4.png"
+    ],
+    "pre_delay": 0,
+    "post_delay": 0,
+    "rate_limit": 100,
+    "method": 5,
+    "count": 9
+  }
+}
