@@ -53,6 +53,7 @@
         "recognition": "TemplateMatch",
         "roi": [110,648,600,450],
         "template": "red_stone.png",
+        "threshold": 0.9,
         "pre_delay": 0,
         "post_delay": 0,
         "rate_limit": 100,
@@ -68,6 +69,7 @@
             "blue_stone_2.png",
             "blue_stone_1.png"
         ],
+        "threshold": [0.8, 0.8, 0.8, 0.8],
         "pre_delay": 0,
         "post_delay": 0,
         "method": 5,
