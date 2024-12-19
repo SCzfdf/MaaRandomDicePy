@@ -42,7 +42,8 @@ class BlueStoneAction(CustomAction):
         if check_status():
             blue_box = argv.box
             with __main__.red_stone_lock:
-                logging.log(f"{blue_box.x}-{blue_box.y} swipe {__main__.red_stone_box.x}-{__main__.red_stone_box.x.y}")
+                # logging.log(f"{blue_box.x}-{blue_box.y} swipe {__main__.red_stone_box.x}-{__main__.red_stone_box.x.y}")
+                print(f"1{blue_box} + {__main__.red_stone_box}")
                 randint = random.randint(20, 50)
                 context.tasker.controller.post_swipe(blue_box.x + randint,
                                                      blue_box.y + randint,

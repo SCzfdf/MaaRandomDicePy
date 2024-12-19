@@ -11,11 +11,13 @@ from maa.toolkit import Toolkit
 from src.action.blue_stone_action import BlueStoneAction
 from src.action.custom_swipe import CustomSwipe
 from src.action.monster_action import MonsterAction
+from src.action.red_stone_action import RedStoneAction
 
 monster_flag = False
 red_stone_flag = False
 red_stone_box = None
 red_stone_lock = threading.Lock()
+swipe_lock = threading.Lock()
 
 
 def main():
@@ -28,19 +30,23 @@ def main():
     # 资源
     resource = Resource()
     resource.post_path(resource_path).wait()
-    resource.register_custom_action("custom_swipe", CustomSwipe())
+    # resource.register_custom_action("custom_swipe", CustomSwipe())
     resource.register_custom_action("blue_stone_action", BlueStoneAction())
-    resource.register_custom_action("red_stone_action", CustomSwipe())
+    resource.register_custom_action("red_stone_action", RedStoneAction())
     resource.register_custom_action("monster_action", MonsterAction())
 
     # 模拟器
     controller = get_controller()
 
     # 任务
-    threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller))
-    # threading.Thread(target=run_recognition_monster_y_task, args=(resource, controller))
-    # threading.Thread(target=run_recognition_red_stone_task, args=(resource, controller))
-    # threading.Thread(target=recognition_blue_stone_task, args=(resource, controller))
+    threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
+    threading.Thread(target=run_recognition_monster_y_task, args=(resource, controller)).start()
+    threading.Thread(target=run_recognition_red_stone_task, args=(resource, controller)).start()
+    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
+    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
+    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
+    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
+    recognition_blue_stone_task(resource, controller)
 
 
 def run_recognition_monster_x_task(resource, controller):
@@ -59,13 +65,15 @@ def run_recognition_red_stone_task(resource, controller):
     task = get_task(resource, controller)
     while True:
         task.post_pipeline('recognition_red_stone').wait()
+        time.sleep(5)
 
 
 def recognition_blue_stone_task(resource, controller):
     task = get_task(resource, controller)
     while True:
-        task.post_pipeline('recognition_blue_stone').wait()
-        time.sleep(5)
+        with swipe_lock:
+            time.sleep(0.2)
+            task.post_pipeline('recognition_blue_stone').wait()
 
 
 def get_task(resource: Resource, controller: AdbController) -> Tasker:
