@@ -29,15 +29,6 @@
         "custom_action": "custom_swipe"
     },
 
-
-    "start": {
-        "next": [
-            "recognition_monster"
-        ],
-        "interrupt": [
-            "recognition_monster2"
-        ]
-    },
     "recognition_monster": {
         "recognition": "OCR",
         "roi": [3,500,100,750],
@@ -46,7 +37,7 @@
         "post_delay": 0,
         "timeout": 5000,
         "action": "Custom",
-        "custom_action": "custom_swipe"
+        "custom_action": "monster_action"
     },
     "recognition_monster2": {
         "recognition": "OCR",
@@ -56,7 +47,7 @@
         "post_delay": 0,
         "timeout": 5000,
         "action": "Custom",
-        "custom_action": "custom_swipe"
+        "custom_action": "monster_action"
     },
     "recognition_red_stone": {
         "recognition": "TemplateMatch",
@@ -64,7 +55,9 @@
         "template": "red_stone.png",
         "pre_delay": 0,
         "post_delay": 0,
-        "rate_limit": 100
+        "rate_limit": 100,
+        "action": "Custom",
+        "custom_action": "red_stone_action"
     },
     "recognition_blue_stone": {
         "recognition": "TemplateMatch",
@@ -78,6 +71,8 @@
         "pre_delay": 0,
         "post_delay": 0,
         "method": 5,
-        "count": 16
+        "count": 16,
+        "action": "Custom",
+        "custom_action": "blue_stone_action"
     }
 }
