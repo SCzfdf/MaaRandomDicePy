@@ -25,7 +25,7 @@ last_y = 0
 def main():
     current_dir = os.getcwd()
     print(f'current_dir:{current_dir}')
-    resource_path = os.path.join(current_dir, "assets", "resource", "v2")
+    resource_path = os.path.join(current_dir, "assets", "resource")
 
     Toolkit.init_option(os.path.join(current_dir, "assets"))
 
