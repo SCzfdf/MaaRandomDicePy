@@ -31,7 +31,7 @@
 
     "recognition_monster": {
         "recognition": "OCR",
-        "roi": [3,500,100,750],
+        "roi": [3,800,100,750],
         "expected": "^\\d+[a-zA-Z]?$",
         "pre_delay": 0,
         "post_delay": 0,
@@ -41,7 +41,7 @@
     },
     "recognition_monster2": {
         "recognition": "OCR",
-        "roi": [100,500,500,100],
+        "roi": [100,500,300,100],
         "expected": "^\\d+[a-zA-Z]?$",
         "pre_delay": 0,
         "post_delay": 0,
@@ -52,8 +52,27 @@
     "recognition_red_stone": {
         "recognition": "TemplateMatch",
         "roi": [110,648,600,450],
-        "template": "red_stone.png",
-        "threshold": 0.9,
+        "template": [
+            "red_stone.png",
+            "r1.png",
+            "r2.png"
+        ],
+        "threshold": [0.9, 0.9,0.9],
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 100,
+        "action": "Custom",
+        "custom_action": "red_stone_action"
+    },
+    "recognition_red_stone2": {
+        "recognition": "TemplateMatch",
+        "roi": [110,648,600,450],
+        "template": [
+            "red_stone.png",
+            "r1.png",
+            "r2.png"
+        ],
+        "threshold": [0.8, 0.8, 0.8],
         "pre_delay": 0,
         "post_delay": 0,
         "rate_limit": 100,
@@ -62,14 +81,20 @@
     },
     "recognition_blue_stone": {
         "recognition": "TemplateMatch",
-        "roi": [110,648,600,450],
+        "roi": [110,660,440,350],
         "template": [
             "blue_stone_4.png",
             "blue_stone_3.png",
             "blue_stone_2.png",
-            "blue_stone_1.png"
+            "blue_stone_1.png",
+            "b1.png",
+            "b2.png",
+            "b3.png",
+            "b4.png",
+            "b5.png",
+            "b6.png"
         ],
-        "threshold": [0.8, 0.8, 0.8, 0.8],
+        "threshold": [0.8, 0.8, 0.8, 0.8,0.8, 0.8, 0.8, 0.8,0.8, 0.8],
         "pre_delay": 0,
         "post_delay": 0,
         "method": 5,
