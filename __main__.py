@@ -1,4 +1,3 @@
-import logging
 import os
 import threading
 import time
@@ -8,10 +7,9 @@ from maa.resource import Resource
 from maa.tasker import Tasker
 from maa.toolkit import Toolkit
 
-from src.action.blue_stone_action import BlueStoneAction
-from src.action.custom_swipe import CustomSwipe
-from src.action.monster_action import MonsterAction
-from src.action.red_stone_action import RedStoneAction
+from src.action.v2.blue_stone_action import BlueStoneAction
+from src.action.v2.monster_action import MonsterAction
+from src.action.v2.red_stone_action import RedStoneAction
 
 monster_flag = True
 red_stone_flag = False

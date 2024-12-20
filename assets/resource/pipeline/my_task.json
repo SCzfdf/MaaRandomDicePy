@@ -1,5 +1,43 @@
 {
-    "MyTask1": {},
-    "MyTask2": {},
-    "MyTask3": {}
+    "screenshot": {
+        "action": "Custom",
+        "custom_action": "screenshot_action",
+        "pre_delay": 0,
+        "post_delay": 0
+    },
+    "monitor_dice": {
+        "action": "Custom",
+        "custom_action": "screenshot_action",
+        "pre_delay": 0,
+        "post_delay": 0
+    },
+
+
+
+    "recognition_red_stone": {
+        "recognition": "TemplateMatch",
+        "roi": [110,648,600,450],
+        "template": [
+            "red_stone.png"
+        ],
+        "threshold": [0.9],
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 100,
+        "action": "Custom",
+        "custom_action": "red_stone_action"
+    },
+    "recognition_red_stone2": {
+        "recognition": "TemplateMatch",
+        "roi": [110,648,600,450],
+        "template": [
+            "red_stone.png"
+        ],
+        "threshold": [0.7],
+        "pre_delay": 0,
+        "post_delay": 0,
+        "rate_limit": 100,
+        "action": "Custom",
+        "custom_action": "red_stone_action"
+    }
 }

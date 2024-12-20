@@ -1,28 +1,26 @@
 import logging
 import os
 import threading
+from typing import List
+
 import time
 
-from maa.controller import AdbController
+from maa.controller import AdbController, Controller
 from maa.resource import Resource
 from maa.tasker import Tasker
 from maa.toolkit import Toolkit
 
-from src.action.blue_stone_action import BlueStoneAction
-from src.action.custom_swipe import CustomSwipe
-from src.action.monster_action import MonsterAction
-from src.action.red_stone_action import RedStoneAction
-
-monster_flag = True
-red_stone_flag = False
-red_stone_box = None
-red_stone_lock = threading.Lock()
-swipe_lock = threading.Lock()
-last_x = 0
-last_y = 0
+from src.action.recognition_single_blue_ston_action import RecognitionSingleBlueStonAction
+from src.action.screenshot_action import ScreenshotAction
+from src.action.v2.blue_stone_action import BlueStoneAction
+from src.action.v2.monster_action import MonsterAction
+from src.action.v2.red_stone_action import RedStoneAction
+from src.rd_context import RDContext
 
 
 def main():
+    dice_list = RDContext.init_dice_list()
+
     current_dir = os.getcwd()
     print(f'current_dir:{current_dir}')
     resource_path = os.path.join(current_dir, "assets", "resource")
@@ -32,50 +30,25 @@ def main():
     # 资源
     resource = Resource()
     resource.post_path(resource_path).wait()
-    # resource.register_custom_action("custom_swipe", CustomSwipe())
-    resource.register_custom_action("blue_stone_action", BlueStoneAction())
-    resource.register_custom_action("red_stone_action", RedStoneAction())
-    resource.register_custom_action("monster_action", MonsterAction())
+    resource.register_custom_action("screenshot_action", ScreenshotAction())
+    # resource.register_custom_action("red_stone_action", RedStoneAction())
+    for i in range(15):
+        resource.register_custom_action(f"recognition_single_blue_ston_action_{i}",
+                                        RecognitionSingleBlueStonAction(dice_list[i], i))
 
     # 模拟器
     controller = get_controller()
 
     # 任务
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_x_task, args=(resource, controller)).start()
-    # threading.Thread(target=run_recognition_monster_y_task, args=(resource, controller)).start()
-
     threading.Thread(target=run_recognition_red_stone_task, args=(resource, controller)).start()
     threading.Thread(target=run_recognition_red_stone_task, args=(resource, controller)).start()
     threading.Thread(target=run_recognition_red_stone_task2, args=(resource, controller)).start()
-
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    threading.Thread(target=recognition_blue_stone_task, args=(resource, controller)).start()
-    recognition_blue_stone_task(resource, controller)
-
-
-def run_recognition_monster_x_task(resource, controller):
-    task = get_task(resource, controller)
-    while True:
-        task.post_pipeline('recognition_monster').wait()
-
-
-def run_recognition_monster_y_task(resource, controller):
-    task = get_task(resource, controller)
-    while True:
-        task.post_pipeline('recognition_monster2').wait()
+    #
+    threading.Thread(target=screenshot, args=(resource, controller)).start()
+    time.sleep(5)
+    # threading.Thread(target=blue_ston, args=(resource, controller, 13)).start()
+    for i in range(15):
+        threading.Thread(target=blue_ston, args=(resource, controller, i)).start()
 
 
 def run_recognition_red_stone_task(resource, controller):
@@ -89,14 +62,26 @@ def run_recognition_red_stone_task2(resource, controller):
     task = get_task(resource, controller)
     while True:
         task.post_pipeline('recognition_red_stone2').wait()
-        if red_stone_flag:
-            break
+        time.sleep(10)
 
 
-def recognition_blue_stone_task(resource, controller):
+def blue_ston(resource: Resource, controller: AdbController, index: int):
     task = get_task(resource, controller)
     while True:
-        task.post_pipeline('recognition_blue_stone').wait()
+        task.post_pipeline(entry=f"custom_monitor_dice", pipeline_override={
+            "custom_monitor_dice": {
+                "action": "Custom",
+                "custom_action": f"recognition_single_blue_ston_action_{index}",
+                "pre_delay": 0,
+                "post_delay": 0
+            }
+        }).wait()
+
+
+def screenshot(resource: Resource, controller: AdbController):
+    task = get_task(resource, controller)
+    while True:
+        task.post_pipeline('screenshot').wait()
 
 
 def get_task(resource: Resource, controller: AdbController) -> Tasker:
@@ -130,10 +115,9 @@ def get_controller() -> AdbController:
 
 
 if __name__ == '__main__':
-    # logging.basicConfig(
-    #     level=logging.DEBUG,  # 设置日志级别
-    #     format='%(asctime)s - %(levelname)s - %(message)s',  # 设置日志格式
-    #     filename='app.log',  # 输出到文件
-    #     filemode='w'  # 文件模式（覆盖写入）
-    # )
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(thread)s %(levelname)s - %(message)s',
+    )
+    logging.info("xxx")
     main()
