@@ -23,11 +23,11 @@ class RDContext:
     _screenshot_img = None
 
     # 移动
-    _swipe_lock = threading.Lock
+    _swipe_lock = threading.Lock()
 
     # 需要移动次数
     _need_swipe_num = 0
-    _need_swipe_lock = threading.Lock
+    _need_swipe_lock = threading.Lock()
 
     # 红骰子下标
     # _red_ston_list: List[int] = []
@@ -43,8 +43,7 @@ class RDContext:
         for i in range(3):
             for o in range(5):
                 dice_roi = [RDContext.init_x + (RDContext.dice_size + 10) * o,
-                            RDContext.init_y + (RDContext.dice_size + 10) * i,
-                            RDContext.dice_size + 10, RDContext.dice_size + 10]
+                            RDContext.init_y + (RDContext.dice_size + 10) * i]
                 logging.info(f'init_dice_list [{i}, {o}] = [{dice_roi}]')
                 RDContext.dice_list.append(dice_roi)
         return RDContext.dice_list
@@ -65,13 +64,14 @@ class RDContext:
 
     @staticmethod
     def try_get_swipe_token() -> bool:
-        if RDContext._need_swipe_num > 0:
-            with RDContext._need_swipe_lock:
-                if RDContext._need_swipe_num <= 0:
-                    return False
-                else:
-                    time.sleep(0.01)
-                    RDContext._need_swipe_num -= 1
-                    return True
-        else:
-            return False
+        # if RDContext._need_swipe_num > 0:
+        # with RDContext._need_swipe_lock:
+            # if RDContext._need_swipe_num <= 0:
+            #     return False
+            # else:
+            # time.sleep(0.01)
+            # RDContext._need_swipe_num -= 1
+                # return True
+        # else:
+        #     return False
+        return True

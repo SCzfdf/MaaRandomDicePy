@@ -53,7 +53,8 @@ class BlueStoneAction(CustomAction):
                                                      blue_box.y + randint,
                                                      __main__.red_stone_box.x + randint,
                                                      __main__.red_stone_box.y, + randint,
-                                                     random.randint(80, 150))
+                                                     random.randint(80, 150)
+                                                     )
                 __main__.last_x = blue_box.x
                 __main__.last_y = blue_box.y
                 # __main__.monster_flag = False

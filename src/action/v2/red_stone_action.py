@@ -1,3 +1,4 @@
+import logging
 import random
 import threading
 from datetime import datetime
@@ -9,6 +10,7 @@ from maa.custom_action import CustomAction
 from maa.define import Rect
 
 import __main__
+from src.rd_context import RDContext
 
 
 class RedStoneAction(CustomAction):
@@ -22,8 +24,10 @@ class RedStoneAction(CustomAction):
         :return: 是否执行成功
         """
 
-        with __main__.red_stone_lock:
-            __main__.red_stone_flag = True
-            __main__.red_stone_box = argv.box
+        logging.info("xxxxx")
+        # with __main__.red_stone_lock:
+        #     __main__.red_stone_flag = True
+        #     __main__.red_stone_box = argv.box
+        RDContext.red_stone_box = argv.box
 
         return True
