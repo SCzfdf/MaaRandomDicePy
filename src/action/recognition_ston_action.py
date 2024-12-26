@@ -83,10 +83,13 @@ class RecognitionStonAction(CustomAction):
             logging.debug('is recognition screenshot')
             return True
 
+        # 识别蓝色骰子
         now = time.time()
         recognition_blue_result = context.run_recognition(self.recognition_blue_title,
                                                           screenshot,
                                                           self.recognition_blue)
+
+        # 识别红色骰子
         # logging.debug(f"1---{time.time() - now}---{recognition_blue_result.best_result.count if recognition_blue_result else None}")
         # logging.debug(recognition_blue_result)
         now = time.time()
@@ -96,10 +99,12 @@ class RecognitionStonAction(CustomAction):
         # logging.debug(f"2---{time.time() - now}----{recognition_red_result.best_result.count if recognition_red_result else None}")
         # logging.debug(recognition_red_result)
 
+        # 如果2个都识别不到就设置类型为-
         if recognition_blue_result is None and recognition_red_result is None:
             self.monitor_dice.type = "-"
             return True
 
+        # 判断得分设置骰子类型
         # logging.debug(f'recognition blue:{recognition_blue_result.best_result.count}, red:{recognition_red_result.best_result.count}')
         if recognition_blue_result is not None and recognition_red_result is not None:
             # if recognition_blue_result.best_result.score > recognition_red_result.best_result.score:

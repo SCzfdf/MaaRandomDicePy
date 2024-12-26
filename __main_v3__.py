@@ -45,6 +45,7 @@ def main():
     for i in range(15):
         threading.Thread(target=recognition_ston, args=(resource, controller, i)).start()
 
+    # 动作线程, 执行动作(将蓝骰子拖拽到红骰子出)
     red_dice_node = None
     blue_dice_node = None
     while True:
